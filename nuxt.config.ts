@@ -62,6 +62,12 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: 'node-server',
+    // Railway injects PORT dynamically — Nitro must honour it
+    runtimeConfig: {
+      nitro: {
+        port: process.env.PORT ? Number(process.env.PORT) : 3000,
+      },
+    },
   },
   fonts: {
     providers: {
