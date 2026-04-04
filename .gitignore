@@ -1,0 +1,37 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.*
+!.env.example
+.env.test
+# Test outputs
+test-results/
+coverage/
+*.log
+
+# Test database
+test.db
+*.test.db
+
+# Vitest cache
+node_modules/.vite/
+node_modules/.vitest/

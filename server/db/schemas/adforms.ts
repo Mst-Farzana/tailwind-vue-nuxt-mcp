@@ -1,0 +1,26 @@
+import { boolean, pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
+
+export const formSubmissions = pgTable('form_submissions', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull(),
+  password: text('password'),
+  phone: text('phone'),
+  currency: text('currency').default('USD'),
+  ip: text('ip'),
+  dropdown: text('dropdown'),
+  customDropdown: text('custom_dropdown'),
+  date: text('date'),
+  textarea: text('textarea'),
+  checkbox: text('checkbox').array(),
+  radio: text('radio'),
+  radioWarning: text('radio_warning'),
+  switchOne: boolean('switch_one').default(true),
+  switchTwo: boolean('switch_two').default(false),
+  switchDangerOne: boolean('switch_danger_one').default(true),
+  switchDangerTwo: boolean('switch_danger_two').default(false),
+  file: text('file'),
+  emailState: text('email_state').default('normal'),
+  textareaState: text('textarea_state').default('normal'),
+  createdAt: timestamp('created_at').defaultNow(),
+});

@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "~/*": ["./*"],
+      "#app": ["./.nuxt/app"],
+      "#imports": ["./.nuxt/imports"],
+      "#build": ["./.nuxt"],
+      "#internal/nuxt/paths": ["./.nuxt/paths"]
+    },
+    "types": ["@playwright/test", "node", "vite/client", "@nuxt/schema", "vitest/globals"],
+    "skipLibCheck": true,
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "target": "esnext",
+    "typeRoots": ["./types", "./node_modules/@types"]
+  },
+  "files": [],
+  "references": [
+    { "path": "./.nuxt/tsconfig.app.json" },
+    { "path": "./.nuxt/tsconfig.server.json" },
+    { "path": "./.nuxt/tsconfig.shared.json" },
+    { "path": "./.nuxt/tsconfig.node.json" }
+  ],
+  "exclude": ["node_modules", ".nuxt/dist", ".output", "dist"]
+}

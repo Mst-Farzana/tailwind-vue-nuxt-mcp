@@ -1,0 +1,41 @@
+# .prettierignore
+
+# Environment
+.env
+.env.*
+.env.example
+.env.test
+
+# Build outputs
+.output
+.nuxt
+.dist
+node_modules
+
+# CSS files (Tailwind/PostCSS syntax)
+assets/css/*.css
+*.css
+
+# Logs & Database
+*.log
+*.sqlite
+*.db
+
+# IDE & OS
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage
+.nyc_output
+
+# Lock files
+pnpm-lock.yaml
+
+.git
+.gitignore
+.husky
+.nuxtrc
+.prettierignore

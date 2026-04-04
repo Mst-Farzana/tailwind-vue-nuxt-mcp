@@ -1,0 +1,24 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+@plugin "daisyui";
+
+
+
+.dark .bg-white {
+  background-color: #1f2937;
+}
+.dark .text-gray-500 {
+  color: #9ca3af;
+}
+.dark .text-gray-700 {
+  color: #4b5563;
+}
+.dark .border-gray-300 {
+  border-color: #4b5563;
+}
+.dark .bg-gray-300 {
+  background-color: #4b5563;
+}
+.dark .peer:checked ~ .bg-blue-500 {
+  background-color: #3b82f6;
+}
