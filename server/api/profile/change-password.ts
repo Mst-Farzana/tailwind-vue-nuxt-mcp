@@ -2,6 +2,7 @@
 import { defineEventHandler, readBody } from 'h3';
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
+import { auth } from '~/server/auth';
 import { db } from '~/server/db';
 import { profileSettings } from '~/server/db/schemas';
 
@@ -12,6 +13,12 @@ export default defineEventHandler(async event => {
   }
 
   try {
+    // Get authenticated session — never trust a client-supplied ID
+    const session = await auth.api.getSession({ headers: event.headers });
+    if (!session?.user?.email) {
+      return { success: false, message: 'Unauthorized' };
+    }
+
     const body = (await readBody(event)) as {
       currentPassword: string;
       newPassword: string;
@@ -27,8 +34,15 @@ export default defineEventHandler(async event => {
       return { success: false, message: 'New password and confirm password do not match' };
     }
 
-    // Fetch user (assuming single user with id = 1)
-    const [user] = await db.select().from(profileSettings).where(eq(profileSettings.id, 1));
+    if (body.newPassword.length < 8) {
+      return { success: false, message: 'New password must be at least 8 characters' };
+    }
+
+    // Fetch user by email from session (not by hardcoded id)
+    const [user] = await db
+      .select()
+      .from(profileSettings)
+      .where(eq(profileSettings.email, session.user.email));
 
     if (!user) {
       return { success: false, message: 'User not found' };
@@ -41,13 +55,13 @@ export default defineEventHandler(async event => {
     }
 
     // Hash new password
-    const hashedPassword = await bcrypt.hash(body.newPassword, 10);
+    const hashedPassword = await bcrypt.hash(body.newPassword, 12);
 
     // Update password in DB
     await db
       .update(profileSettings)
       .set({ password: hashedPassword })
-      .where(eq(profileSettings.id, 1));
+      .where(eq(profileSettings.email, session.user.email));
 
     return { success: true, message: 'Password updated successfully' };
   } catch (err) {

@@ -1,73 +1,56 @@
 // server/api/profile/avatar.ts
-import { useRuntimeConfig } from '#imports';
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { createError, defineEventHandler } from 'h3';
-import { Pool } from 'pg';
+import { v2 as cloudinary } from 'cloudinary';
+import { eq } from 'drizzle-orm';
+import { createError, defineEventHandler, readMultipartFormData } from 'h3';
+import { db } from '~/server/db';
 import { profile } from '~/server/db/schemas/index';
 
-// ✅ Import eq from drizzle-orm
-import { eq } from 'drizzle-orm';
-
-const globalForDb = globalThis as unknown as {
-  db?: ReturnType<typeof drizzle>;
-  pool?: Pool;
-};
-
-async function useDb() {
-  if (!globalForDb.db) {
-    const config = useRuntimeConfig();
-    const connectionString = config.DATABASE_URL;
-
-    if (!connectionString) {
-      throw new Error('DATABASE_URL is missing');
-    }
-
-    globalForDb.pool = new Pool({
-      connectionString,
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-    });
-
-    await globalForDb.pool.query('SELECT 1');
-    globalForDb.db = drizzle(globalForDb.pool);
-  }
-
-  return globalForDb.db;
-}
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export default defineEventHandler(async event => {
   try {
-    const db = await useDb();
+    const formData = await readMultipartFormData(event);
 
-    const userId = 1;
+    if (!formData) {
+      throw createError({ statusCode: 400, message: 'No form data received' });
+    }
 
-    const formData = await readFormData(event);
-    const file = formData.get('avatar') as File | null;
+    const fileField = formData.find(f => f.name === 'avatar' && f.data);
 
-    if (!file) {
+    if (!fileField) {
       throw createError({ statusCode: 400, message: 'No file uploaded' });
     }
 
     // Validate file type
-    if (!file.type.startsWith('image/')) {
+    if (!fileField.type?.startsWith('image/')) {
       throw createError({ statusCode: 400, message: 'Only image files are allowed' });
     }
 
     // Validate file size (5MB max)
-    if (file.size > 5 * 1024 * 1024) {
+    if (fileField.data.byteLength > 5 * 1024 * 1024) {
       throw createError({ statusCode: 400, message: 'File size must be less than 5MB' });
     }
 
-    // Generate unique filename
-    const extension = file.name.split('.').pop();
-    const fileName = `${userId}_${Date.now()}.${extension}`;
+    // Upload to Cloudinary
+    const buffer = Buffer.from(fileField.data);
+    const avatarUrl = await new Promise<string>((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: 'avatars', resource_type: 'image' },
+        (error, result) => {
+          if (error) return reject(error);
+          if (result?.secure_url) resolve(result.secure_url);
+          else reject(new Error('Cloudinary upload failed'));
+        },
+      );
+      stream.end(buffer);
+    });
 
-    // In real app, save to cloud storage or public folder
-    // For demo, we'll just generate a URL based on the filename
-
-    const avatarUrl = `/uploads/${fileName}`;
-
-    // Update database
-    await db.update(profile).set({ avatar: avatarUrl }).where(eq(profile.id, userId));
+    // Update database (profile id=1 is the demo profile row)
+    await db.update(profile).set({ avatar: avatarUrl }).where(eq(profile.id, 1));
 
     return {
       success: true,

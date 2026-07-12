@@ -32,34 +32,40 @@ export default defineEventHandler(async event => {
     }
 
     if (method === 'GET') {
-      const rows = await db.select().from(overview);
+      try {
+        const rows = await db.select().from(overview);
 
-      return rows.map(row => {
-        let statusColor: OverviewItem['statusColor'] = 'blue';
-        let statusText = 'No change';
+        return rows.map(row => {
+          let statusColor: OverviewItem['statusColor'] = 'blue';
+          let statusText = 'No change';
 
-        if (row.trend_value > 0) {
-          statusColor = 'green';
-          statusText = `↑ ${row.trend_value}%`;
-        } else if (row.trend_value < 0) {
-          statusColor = 'red';
-          statusText = `↓ ${Math.abs(row.trend_value)}%`;
-        } else {
-          statusColor = 'yellow';
-          statusText = 'No change';
-        }
+          if (row.trend_value > 0) {
+            statusColor = 'green';
+            statusText = `↑ ${row.trend_value}%`;
+          } else if (row.trend_value < 0) {
+            statusColor = 'red';
+            statusText = `↓ ${Math.abs(row.trend_value)}%`;
+          } else {
+            statusColor = 'yellow';
+            statusText = 'No change';
+          }
 
-        return {
-          id: row.id,
-          title: row.title,
-          value: row.value,
-          icon: row.icon,
-          iconColor: row.icon_color,
-          trendValue: row.trend_value,
-          statusText,
-          statusColor,
-        };
-      });
+          return {
+            id: row.id,
+            title: row.title,
+            value: row.value,
+            icon: row.icon,
+            iconColor: row.icon_color,
+            trendValue: row.trend_value,
+            statusText,
+            statusColor,
+          };
+        });
+      } catch {
+        // Return empty array if database is unavailable (e.g., during static generation)
+        console.warn('Database unavailable for overview query, returning empty array');
+        return [];
+      }
     }
 
     throw createError({ statusCode: 405, message: 'Method not allowed' });

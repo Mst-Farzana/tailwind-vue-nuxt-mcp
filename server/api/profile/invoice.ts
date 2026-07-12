@@ -19,33 +19,47 @@ export default defineEventHandler(async event => {
         return { success: false, message: 'Invalid invoice data' };
       }
 
-      const [newInvoice] = await db
-        .insert(invoices)
-        .values({
-          date: body.date,
-          amount: body.amount,
-          status: body.status,
-          invoiceUrl: body.invoiceUrl,
-        })
-        .returning({
-          // এখানে invoices টেবিলের টাইপ specify করুন
-          id: invoices.id,
-          date: invoices.date,
-          amount: invoices.amount,
-          status: invoices.status,
-          invoiceUrl: invoices.invoiceUrl,
-        });
+      try {
+        const [newInvoice] = await db
+          .insert(invoices)
+          .values({
+            date: body.date,
+            amount: body.amount,
+            status: body.status,
+            invoiceUrl: body.invoiceUrl,
+          })
+          .returning({
+            // এখানে invoices টেবিলের টাইপ specify করুন
+            id: invoices.id,
+            date: invoices.date,
+            amount: invoices.amount,
+            status: invoices.status,
+            invoiceUrl: invoices.invoiceUrl,
+          });
 
-      return { success: true, message: 'Invoice added', data: newInvoice };
+        return { success: true, message: 'Invoice added', data: newInvoice };
+      } catch {
+        console.warn('Database unavailable for invoice POST, returning success anyway');
+        return { success: false, message: 'Database unavailable', data: [] };
+      }
     }
 
     // ---------------- GET ----------------
-    const invoiceList = await db.select().from(invoices).orderBy(invoices.id);
+    try {
+      const invoiceList = await db.select().from(invoices).orderBy(invoices.id);
 
-    return {
-      success: true,
-      data: invoiceList,
-    };
+      return {
+        success: true,
+        data: invoiceList,
+      };
+    } catch {
+      // Return empty array if database is unavailable (e.g., during static generation)
+      console.warn('Database unavailable for invoices query, returning empty array');
+      return {
+        success: false,
+        data: [],
+      };
+    }
   } catch (error) {
     console.error('❌ Invoices API error:', error);
     return { success: false, data: [] };

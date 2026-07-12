@@ -49,11 +49,11 @@ export default defineEventHandler(async event => {
     });
 
     return { success: true, organization: org };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Organization creation failed:', error);
     throw createError({
       statusCode: 500,
-      message: error.message || 'Failed to create organization',
+      message: error instanceof Error ? error.message : 'Failed to create organization',
     });
   }
 });

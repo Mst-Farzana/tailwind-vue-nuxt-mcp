@@ -21,35 +21,49 @@ export default defineEventHandler(async event => {
         return { success: false, message: 'Invalid data' };
       }
 
-      const [newBilling] = await db
-        .insert(billing)
-        .values({
-          nextPaymentDate: body.nextPaymentDate,
-          lastBilledDate: body.lastBilledDate,
-          amountDue: body.amountDue,
-          status: body.status,
-          invoiceUrl: body.invoiceUrl,
-        })
-        .returning(); // ✅ Remove '*' - use default return type
+      try {
+        const [newBilling] = await db
+          .insert(billing)
+          .values({
+            nextPaymentDate: body.nextPaymentDate,
+            lastBilledDate: body.lastBilledDate,
+            amountDue: body.amountDue,
+            status: body.status,
+            invoiceUrl: body.invoiceUrl,
+          })
+          .returning(); // ✅ Remove '*' - use default return type
 
-      return { success: true, message: 'Billing added', data: newBilling };
+        return { success: true, message: 'Billing added', data: newBilling };
+      } catch {
+        console.warn('Database unavailable for billing POST, returning error response');
+        return { success: false, message: 'Database unavailable', data: null };
+      }
     }
 
     // ---------------- GET ----------------
-    const [billingSummary] = await db.select().from(billing).limit(1);
+    try {
+      const [billingSummary] = await db.select().from(billing).limit(1);
 
-    return {
-      success: true,
-      data: billingSummary
-        ? {
-            nextPaymentDate: billingSummary.nextPaymentDate,
-            lastBilledDate: billingSummary.lastBilledDate,
-            amountDue: billingSummary.amountDue,
-            status: billingSummary.status,
-            invoiceUrl: billingSummary.invoiceUrl,
-          }
-        : null,
-    };
+      return {
+        success: true,
+        data: billingSummary
+          ? {
+              nextPaymentDate: billingSummary.nextPaymentDate,
+              lastBilledDate: billingSummary.lastBilledDate,
+              amountDue: billingSummary.amountDue,
+              status: billingSummary.status,
+              invoiceUrl: billingSummary.invoiceUrl,
+            }
+          : null,
+      };
+    } catch {
+      // Return empty data if database is unavailable (e.g., during static generation)
+      console.warn('Database unavailable for billing query, returning null');
+      return {
+        success: false,
+        data: null,
+      };
+    }
   } catch (error) {
     console.error('❌ Billing API error:', error);
     return { success: false, data: null };

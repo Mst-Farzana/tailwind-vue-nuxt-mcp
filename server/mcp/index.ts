@@ -29,8 +29,8 @@ type OllamaResponse = {
 };
 
 // ---------------- Ollama Config ----------------
-const OLLAMA_URL = 'http://127.0.0.1:11434/v1/chat/completions';
-const MODEL_NAME = 'llama3'; // change if needed
+const OLLAMA_URL = process.env.OLLAMA_URL || 'http://127.0.0.1:11434/v1/chat/completions';
+const MODEL_NAME = process.env.OLLAMA_MODEL || 'gemma3:1b';
 
 // ---------------- Auto Reply ----------------
 export async function getAutoReply(messages: ChatMessage[]): Promise<string> {

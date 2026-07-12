@@ -21,8 +21,9 @@ export default defineEventHandler(async event => {
 
       return { success: true, data };
     } catch (error) {
-      console.error('❌ GET users error:', error);
-      return { success: false, message: 'Failed to fetch users' };
+      console.warn('❌ GET users error - database unavailable, returning empty array:', error);
+      // Return empty array if database is unavailable (e.g., during static generation)
+      return { success: false, data: [], message: 'Failed to fetch users' };
     }
   }
 
