@@ -64,6 +64,9 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: 'vercel',
+    externals: {
+      inline: ['drizzle-orm', 'pg'],
+    },
   },
 
   // GitHub Pages এর জন্য সব routes prerender
