@@ -29,12 +29,15 @@ const { displayValue } = useCountAnimation(numericValue.value, 1500, props.index
 </script>
 
 <template>
-  <div class="relative rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+  <!-- ডার্ক মোড এবং রেসপন্সিভ প্যাডিং যোগ করা হয়েছে -->
+  <div
+    class="relative rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-colors duration-300 md:p-6 dark:border-gray-700 dark:bg-gray-800"
+  >
     <!-- Top: Badge + Settings -->
-    <div class="mb-4 flex items-start justify-between">
+    <div class="mb-3 flex items-start justify-between md:mb-4">
       <span
         :class="[
-          'rounded-full px-3 py-1 text-xs font-medium',
+          'rounded-full px-2.5 py-1 text-xs font-medium md:px-3',
           statusColor === 'green'
             ? 'bg-green-500 text-white'
             : statusColor === 'red'
@@ -48,27 +51,31 @@ const { displayValue } = useCountAnimation(numericValue.value, 1500, props.index
       </span>
 
       <button
-        class="flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-gray-100 transition hover:bg-gray-200"
+        class="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-gray-100 transition hover:bg-gray-200 md:h-9 md:w-9 md:rounded-xl dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600"
         aria-label="Settings"
       >
-        <Icon icon="mdi:cog-outline" class="text-xl text-gray-600" />
+        <Icon icon="mdi:cog-outline" class="text-lg text-gray-600 md:text-xl dark:text-gray-300" />
       </button>
     </div>
 
     <!-- Title -->
-    <h3 class="mb-2 text-lg font-semibold text-gray-900">{{ title }}</h3>
+    <h3 class="mb-1 text-base font-semibold text-gray-900 md:mb-2 md:text-lg dark:text-gray-100">
+      {{ title }}
+    </h3>
 
     <!-- Value with counting animation -->
-    <div class="mb-4 text-2xl font-bold text-gray-900">
+    <div
+      class="mb-3 text-xl font-bold text-gray-900 md:mb-4 md:text-2xl lg:text-3xl dark:text-white"
+    >
       {{ prefix }}{{ displayValue }}{{ suffix }}
     </div>
 
     <!-- Icon -->
-    <div class="absolute right-5 bottom-5">
+    <div class="absolute right-4 bottom-4 md:right-5 md:bottom-5">
       <Icon
         :icon="icon"
         :class="[
-          'text-3xl',
+          'text-2xl md:text-3xl',
           statusColor === 'green'
             ? 'text-green-500'
             : statusColor === 'red'

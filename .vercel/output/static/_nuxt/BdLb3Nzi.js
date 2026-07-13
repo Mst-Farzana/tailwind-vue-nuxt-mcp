@@ -1,0 +1,1 @@
+import{_ as t,c as o,a as s,o as r}from"./BPSwXVBo.js";const c={},n={class:"p-6"};function a(_,e){return r(),o("div",n,[...e[0]||(e[0]=[s("h1",null,"Edit Profile",-1)])])}const i=t(c,[["render",a]]);export{i as default};

@@ -36,5 +36,6 @@ export default {
   plugins: ['@tailwindcss/typography'],
   daisyui: {
     themes: ['light', 'dark', 'cupcake', 'bumblebee'],
+    darkTheme: 'dark',
   },
 };

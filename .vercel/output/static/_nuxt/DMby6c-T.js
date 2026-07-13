@@ -1,0 +1,1 @@
+import{c as t,o as e}from"./BPSwXVBo.js";const r={__name:"logout",setup(a){const o=async()=>{await $fetch("/api/auth/logout",{method:"POST"})};return(c,n)=>(e(),t("button",{onClick:o},"Logout"))}};export{r as default};

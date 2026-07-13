@@ -22,14 +22,12 @@ export default defineNuxtConfig({
     ...(process.env.NODE_ENV === 'test' ? ['@nuxt/test-utils/module'] : []),
   ],
 
-  colorMode:
-    process.env.NODE_ENV === 'test'
-      ? false
-      : {
-          preference: 'system',
-          fallback: 'light',
-          classSuffix: '',
-        },
+  colorMode: {
+    preference: 'system',
+    fallback: 'light',
+    classPrefix: '',
+    classSuffix: '',
+  },
 
   app: {
     baseURL: '/',

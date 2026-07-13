@@ -1,0 +1,1 @@
+import{b as t,k as o,n as s,c as n,o as r}from"./BPSwXVBo.js";const u={__name:"success",setup(c){const e=t();return o(async()=>{const a=e.query.tran_id;await $fetch("/api/payment/verify",{method:"POST",body:{tranId:a}}),await s("/sidebar/dashboard")}),(a,d)=>(r(),n("div"))}};export{u as default};

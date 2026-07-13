@@ -1,0 +1,1 @@
+import{_ as e,c as r,a as s,o as t}from"./BPSwXVBo.js";const a={},n={class:"p-6"};function c(d,o){return t(),r("div",n,[...o[0]||(o[0]=[s("h1",null,"Forgot Password",-1),s("p",null,"Reset your password here.",-1)])])}const _=e(a,[["render",c]]);export{_ as default};
