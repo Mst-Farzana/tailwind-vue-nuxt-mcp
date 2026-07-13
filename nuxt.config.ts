@@ -32,7 +32,7 @@ export default defineNuxtConfig({
         },
 
   app: {
-    baseURL: process.env.GITHUB_PAGES === 'true' ? '/tailwind-vue-nuxt-mcp/' : '/',
+    baseURL: '/',
     head: {
       title: 'My Nuxt App',
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
@@ -65,22 +65,22 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: process.env.GITHUB_PAGES === 'true' ? 'github-pages' : 'node-server',
+    preset: 'vercel',
   },
 
-  // GitHub Pages এর জন্য সব routes prerender করুন
-  routeRules:
-    process.env.GITHUB_PAGES === 'true'
-      ? {
-          '/': { prerender: true },
-          '/auth/**': { prerender: true },
-          '/payment/**': { prerender: true },
-          '/forms/**': { prerender: true },
-          '/dashboard/**': { prerender: true },
-          '/settings/**': { prerender: true },
-          '/profile/**': { prerender: true },
-        }
-      : {},
+  // GitHub Pages এর জন্য সব routes prerender
+  // routeRules:
+  //   process.env.GITHUB_PAGES === 'true'
+  //     ? {
+  //         '/': { prerender: true },
+  //         '/auth/**': { prerender: true },
+  //         '/payment/**': { prerender: true },
+  //         '/forms/**': { prerender: true },
+  //         '/dashboard/**': { prerender: true },
+  //         '/settings/**': { prerender: true },
+  //         '/profile/**': { prerender: true },
+  //       }
+  //     : {},
 
   fonts: {
     providers: {
