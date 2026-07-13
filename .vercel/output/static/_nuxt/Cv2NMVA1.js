@@ -1,1 +1,0 @@
-import{_ as s,c as t,a as o,o as a}from"./CWIduU7L.js";const c={},n={class:"p-6"};function r(d,e){return a(),t("div",n,[...e[0]||(e[0]=[o("h1",null,"Add New Item",-1)])])}const l=s(c,[["render",r]]);export{l as default};

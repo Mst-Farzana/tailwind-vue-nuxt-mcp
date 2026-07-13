@@ -1,1 +1,0 @@
-import{u as e}from"./CO1OwBKV.js";import{c as a,o as n,n as s}from"./CWIduU7L.js";const l={__name:"logout",setup(r){const{signOut:t}=e(),o=async()=>{await t(),await s("/auth/login")};return(c,u)=>(n(),a("button",{class:"px-4 py-2 text-sm font-medium text-red-600 transition hover:text-red-700",onClick:o}," Logout "))}};export{l as default};
