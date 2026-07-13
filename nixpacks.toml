@@ -1,4 +1,0 @@
-providers = ["node"]
-
-[variables]
-NODE_ENV = "production"
