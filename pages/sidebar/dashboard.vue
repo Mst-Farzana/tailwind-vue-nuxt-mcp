@@ -5,7 +5,7 @@ import FinanceTable from '~/components/dashboard/FinanceTable.vue';
 import ProductList from '~/components/dashboard/ProductList.vue';
 import TrendsList from '~/components/dashboard/TrendsList.vue';
 import profile from '~/components/dashboard/profile.vue';
-import overview from '~/overview.vue';
+import overview from './overview.vue';
 
 // definePageMeta({
 //   // middleware: 'auth',
