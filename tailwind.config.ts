@@ -1,41 +1,37 @@
-// tailwind.config.js
-/** @type {import('tailwindcss').Config} */
+import forms from '@tailwindcss/forms';
+import type { Config } from 'tailwindcss';
 
 export default {
+  darkMode: 'class',
   content: [
-    './components/**/*.{vue,js,ts,jsx,tsx}',
+    './app/**/*.{js,vue,ts}',
+    './assets/**/*.{js,vue,ts,css}',
+    './components/**/*.{js,vue,ts}',
     './layouts/**/*.vue',
     './pages/**/*.vue',
+    './composables/**/*.{js,ts}',
     './plugins/**/*.{js,ts}',
-    './app.vue',
-    './error.vue',
-  ],
-  safelist: [
-    'border-gray-500',
-    'border-black',
-    'border-blue-500',
-    'border-green-500',
-    'border-yellow-500',
-    'border-red-500',
-    'text-gray-500',
-    'text-black',
-    'text-blue-500',
-    'text-green-500',
-    'text-yellow-500',
-    'text-red-500',
-    'bg-gray-500',
-    'bg-black',
-    'bg-blue-500',
-    'bg-green-500',
-    'bg-yellow-500',
-    'bg-red-500',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: {
+          50: '#eff6ff',
+          100: '#dbeafe',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          900: '#1e3a8a',
+        },
+        secondary: {
+          500: '#8b5cf6',
+          600: '#7c3aed',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      },
+    },
   },
-  plugins: ['@tailwindcss/typography'],
-  daisyui: {
-    themes: ['light', 'dark', 'cupcake', 'bumblebee'],
-    darkTheme: 'dark',
-  },
-};
+  plugins: [forms],
+} satisfies Config;
