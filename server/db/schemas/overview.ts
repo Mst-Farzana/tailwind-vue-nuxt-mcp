@@ -16,8 +16,8 @@ export interface OverviewItem {
   title: string;
   value: string;
   icon: string;
-  iconColor: string; // 👈 camelCase
-  trendValue: number; // 👈 camelCase
+  iconColor: string;
+  trendValue: number;
   statusText: string;
   statusColor: 'green' | 'red' | 'yellow' | 'blue';
 }
