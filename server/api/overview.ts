@@ -25,13 +25,12 @@ export default defineEventHandler(async event => {
 
       const rowsToInsert = Array.isArray(body) ? body : [body];
 
-      // ডেটাবেসে ইনসার্ট করা
       const result = await db.insert(overview).values(rowsToInsert).returning();
 
       return {
         success: true,
         inserted: result.length,
-        data: result, // অপশনাল: ইনসার্ট হওয়া ডেটা ফেরত দিলে ফ্রন্টএন্ডে কাজে লাগে
+        data: result,
       };
     }
 
@@ -57,7 +56,7 @@ export default defineEventHandler(async event => {
         return {
           id: row.id,
           title: row.title,
-          // ⚠️ গুরুত্বপূর্ণ: ফ্রন্টএন্ডে .replace() ব্যবহার করা হয়েছে, তাই value অবশ্যই String হতে হবে
+
           value: String(row.value),
           icon: row.icon,
           iconColor: row.icon_color,
@@ -76,12 +75,10 @@ export default defineEventHandler(async event => {
   } catch (error: any) {
     console.error('Overview API Error:', error);
 
-    // যদি ইতিমধ্যেই H3 এরর হয়, সেটি সরাসরি থ্রো করুন
     if (error.statusCode) {
       throw error;
     }
 
-    // অন্যান্য আনএক্সপেক্টেড এররের জন্য 500 রিটার্ন করুন
     throw createError({
       statusCode: 500,
       message:
