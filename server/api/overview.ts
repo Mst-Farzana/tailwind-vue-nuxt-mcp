@@ -3,7 +3,7 @@ import { overview, type OverviewItem } from '~/server/db/schemas/index';
 import { getDb } from '~/server/utils/db';
 
 export default defineEventHandler(async event => {
-  const method = getMethod(event); // আধুনিক H3 পদ্ধতি (event.node.req.method এর পরিবর্তে)
+  const method = getMethod(event);
   const db = getDb();
 
   try {
