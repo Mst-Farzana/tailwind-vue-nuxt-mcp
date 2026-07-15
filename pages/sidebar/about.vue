@@ -22,7 +22,7 @@ const getMessageClass = (role: 'user' | 'assistant') =>
 </script>
 
 <template>
-  <section class="mx-auto max-w-3xl px-4 py-12">
+  <section class="mx-auto max-w-3xl px-4 py-12 dark:bg-gray-950 dark:text-gray-100">
     <div class="mb-8">
       <h1 class="text-3xl font-bold text-gray-900">AI Chat</h1>
     </div>

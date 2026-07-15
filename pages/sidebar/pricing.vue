@@ -89,7 +89,7 @@ const isButtonDisabled = (plan: PricingPlan) => loadingPlan.value !== null || is
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 py-12">
+  <div class="min-h-screen bg-gray-50 py-12 dark:bg-gray-950 dark:text-gray-100">
     <!-- Error Message -->
     <div v-if="upgradeError" class="mx-auto mb-6 max-w-6xl px-4">
       <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">

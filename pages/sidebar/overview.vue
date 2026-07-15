@@ -27,7 +27,7 @@ const hasError = computed(() => !!error.value);
 </script>
 
 <template>
-  <div class="w-full">
+  <div class="w-full dark:bg-gray-950 dark:text-gray-100">
     <div
       class="mb-6 flex flex-col items-start justify-between gap-4 md:mb-8 md:flex-row md:items-center"
     >

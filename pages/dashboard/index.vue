@@ -4,8 +4,8 @@ const { data } = await useFetch('/api/analytics/stats');
 </script>
 
 <template>
-  <div>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+  <div class="dark:bg-gray-950 dark:text-gray-100">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-4 dark:bg-gray-950 dark:text-gray-100">
       <StatsCard
         title="Revenue"
         :value="`$${data.value.revenue}`"

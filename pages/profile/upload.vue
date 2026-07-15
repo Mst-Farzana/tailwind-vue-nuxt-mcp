@@ -126,7 +126,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="mx-auto max-w-2xl p-6">
+  <div class="mx-auto max-w-2xl p-6 dark:bg-gray-950 dark:text-gray-100">
     <!-- Header -->
     <div class="mb-8 flex items-center gap-4">
       <NuxtLink to="/profile" class="text-blue-600 hover:text-blue-800">

@@ -19,7 +19,7 @@ const { data, pending } = await useAsyncData<User[]>('users', async () => {
 const users = computed(() => data.value ?? []);
 </script>
 
-<template>
+<template class="dark:bg-gray-950 dark:text-gray-100">
   <ClientOnly>
     <div v-if="pending" class="text-center text-gray-500">Loading users...</div>
 

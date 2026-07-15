@@ -26,7 +26,7 @@ function pushSnackbar() {
 }
 </script>
 <template>
-  <div class="min-h-screen bg-gray-50 p-6">
+  <div class="min-h-screen bg-gray-50 p-6 dark:bg-gray-950 dark:text-gray-100">
     <!-- Header -->
     <h1 class="mb-8 text-center text-xl font-medium text-gray-500">SnackBar Toasts</h1>
 

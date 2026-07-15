@@ -20,7 +20,7 @@ const filteredUsers = computed(() => {
 </script>
 
 <template>
-  <div class="p-6">
+  <div class="p-6 dark:bg-gray-950 dark:text-gray-100">
     <!-- Header -->
     <div class="mb-6 flex items-center justify-between">
       <h1 class="text-2xl font-bold">Users</h1>

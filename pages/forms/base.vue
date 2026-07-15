@@ -80,7 +80,7 @@ const reset = () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 p-6">
+  <div class="min-h-screen bg-gray-50 p-6 dark:bg-gray-950 dark:text-gray-100">
     <!-- Header -->
     <div class="mb-8 flex items-center justify-between">
       <h1 class="text-2xl font-bold">Forms example</h1>

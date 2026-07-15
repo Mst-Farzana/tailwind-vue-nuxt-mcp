@@ -13,7 +13,9 @@ const menuItems = [
 </script>
 
 <template>
-  <div class="-mt-5 min-h-screen bg-linear-to-br from-pink-500 to-purple-600">
+  <div
+    class="-mt-5 min-h-screen bg-linear-to-br from-pink-500 to-purple-600 dark:bg-gray-950 dark:text-gray-100"
+  >
     <div class="grid min-h-screen grid-cols-3 items-center p-6">
       <!-- Left: Menu + Text -->
       <div class="col-span-2">
