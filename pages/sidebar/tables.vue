@@ -19,12 +19,16 @@ const { data, pending } = await useAsyncData<User[]>('users', async () => {
 const users = computed(() => data.value ?? []);
 </script>
 
-<template class="dark:bg-gray-950 dark:text-gray-100">
+<template>
   <ClientOnly>
-    <div v-if="pending" class="text-center text-gray-500">Loading users...</div>
+    <div class="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+      <div v-if="pending" class="text-center text-gray-500 dark:text-gray-400">
+        Loading users...
+      </div>
 
-    <div v-else class="space-y-4">
-      <ProfileUsers v-for="user in users" :key="user.id" :user="user" />
+      <div v-else class="space-y-4">
+        <ProfileUsers v-for="user in users" :key="user.id" :user="user" />
+      </div>
     </div>
   </ClientOnly>
 </template>

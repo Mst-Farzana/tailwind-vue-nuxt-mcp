@@ -29,9 +29,9 @@ const hasError = computed(() => !!error.value);
 <template>
   <div class="w-full dark:bg-gray-950 dark:text-gray-100">
     <div
-      class="mb-6 flex flex-col items-start justify-between gap-4 md:mb-8 md:flex-row md:items-center"
+      class="mb-6 flex flex-col items-start justify-between gap-4 md:mb-8 md:flex-row md:items-center dark:bg-gray-950 dark:text-gray-100"
     >
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-3 dark:bg-gray-950 dark:text-gray-100">
         <div
           class="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow md:h-12 md:w-12 dark:bg-gray-800 dark:shadow-gray-900/50"
         >
@@ -40,7 +40,9 @@ const hasError = computed(() => !!error.value);
             class="text-xl text-gray-700 md:text-2xl dark:text-gray-300"
           />
         </div>
-        <h1 class="text-2xl font-semibold text-gray-900 md:text-3xl dark:text-gray-100">
+        <h1
+          class="text-2xl font-semibold text-gray-900 md:text-3xl dark:bg-gray-950 dark:text-gray-100"
+        >
           Overview
         </h1>
       </div>

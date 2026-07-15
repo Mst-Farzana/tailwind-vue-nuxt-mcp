@@ -8,5 +8,5 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="dark:bg-gray-950 dark:text-gray-100" />
+  <div />
 </template>
