@@ -3,15 +3,8 @@ import { navigateTo } from '#app';
 import { Icon } from '@iconify/vue';
 import { onMounted, ref } from 'vue';
 
-// Parent থেকে স্টেট নেওয়া এবং পরিবর্তন হলে Parent কে জানানো
-const props = defineProps({
-  isOpen: {
-    type: Boolean,
-    default: true,
-  },
-});
-
-const emit = defineEmits(['update:isOpen']);
+// Sidebar open/close
+const isOpen = ref(false);
 
 // Sub-panel open/close
 const openSubPanel = ref(false);
@@ -54,7 +47,6 @@ function selectItem(item) {
     activeSubItem.value = subItems.value[0].label;
   } else {
     openSubPanel.value = false;
-    if (item.path) navigateTo(item.path);
   }
 }
 
@@ -71,12 +63,6 @@ function selectSubItem(sub) {
   activeSubItem.value = sub.label;
 }
 
-// ✅ স্পেসিং ফিক্স: Parent কে Sidebar এর নতুন স্টেট জানানো
-function toggleSidebar() {
-  const newState = !props.isOpen;
-  emit('update:isOpen', newState);
-}
-
 onMounted(() => {
   navigateTo('/sidebar/dashboard'); // ✅ No .vue extension
 });
@@ -84,25 +70,16 @@ onMounted(() => {
 
 <template>
   <div class="flex text-sm">
-    <!-- 
-      ✅ স্পেসিং ফিক্স: 
-      - Collapsed (শুধু আইকন): w-20 (5rem = 80px, যা Tailwind এ 20 স্পেস ইউনিট)
-      - Expanded (টেক্সট সহ): w-64 (16rem = 256px, যা Tailwind এ 64 স্পেস ইউনিট)
-    -->
+    <!-- Sidebar -->
     <aside
       :class="[
         'flex h-screen flex-col overflow-hidden rounded-2xl bg-[#0d1729] text-sm text-white transition-all duration-300',
-        isOpen ? 'w-64' : 'w-20',
+        isOpen ? 'w-56' : 'w-18',
       ]"
     >
       <!-- Logo -->
       <div class="flex items-center justify-center rounded py-3">
-        <h1
-          class="font-bold text-white transition-all duration-300"
-          :class="isOpen ? 'text-xl opacity-100' : 'w-0 overflow-hidden text-sm opacity-0'"
-        >
-          One
-        </h1>
+        <h1 class="text-xl font-bold" :class="isOpen ? 'text-xl' : 'text-sm'">One</h1>
       </div>
 
       <!-- Main Menu Items -->
@@ -122,7 +99,7 @@ onMounted(() => {
       <!-- Collapse / Expand Button -->
       <button
         class="flex h-10 items-center justify-center gap-2 rounded-b-xl bg-blue-600 transition-all duration-300 hover:bg-blue-700"
-        @click="toggleSidebar"
+        @click="isOpen = !isOpen"
       >
         <Icon
           :icon="isOpen ? 'mdi:chevron-left' : 'mdi:chevron-right'"
