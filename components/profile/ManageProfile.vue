@@ -132,7 +132,7 @@ onMounted(fetchProfile);
 </script>
 
 <template>
-  <div class="flex min-h-screen justify-center bg-gray-50 p-6">
+  <div class="flex min-h-screen justify-center bg-gray-50 p-6 dark:bg-gray-900 dark:text-gray-100">
     <div class="w-full max-w-md rounded-lg bg-white p-6 shadow">
       <h1 class="mb-6 text-2xl font-bold">Manage Profile</h1>
 

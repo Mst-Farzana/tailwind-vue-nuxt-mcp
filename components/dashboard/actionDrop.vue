@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
 import { Icon } from '@iconify/vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 
 interface Option {
   label: string;
@@ -45,7 +45,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="dropdownRef" class="relative">
+  <div ref="dropdownRef" class="relative dark:bg-gray-900 dark:text-gray-100">
     <button class="rounded-md p-2 hover:bg-gray-100" @click.stop="toggle">
       <Icon icon="mdi:dots-vertical" class="h-5 w-5 text-gray-600" />
     </button>

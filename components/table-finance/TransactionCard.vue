@@ -16,7 +16,7 @@ defineProps<{ transaction: Transaction }>();
 </script>
 
 <template>
-  <div class="rounded p-4 transition hover:shadow-lg">
+  <div class="rounded p-4 transition hover:shadow-lg dark:bg-gray-900 dark:text-gray-100">
     <div class="flex items-center justify-between text-sm">
       <div class="flex items-center justify-center gap-8">
         <div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 p-1">

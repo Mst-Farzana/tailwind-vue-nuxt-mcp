@@ -45,9 +45,9 @@ onMounted(() => fetchTransactions());
     <div
       v-for="trans in transactions"
       :key="trans.id"
-      class="flex items-center justify-between rounded-lg bg-gray-50 p-4"
+      class="flex items-center justify-between rounded-lg bg-gray-50 p-4 dark:bg-gray-900 dark:text-gray-100"
     >
-      <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-4 dark:bg-gray-900 dark:text-gray-100">
         <Icon
           :icon="trans.icon"
           class="text-2xl"

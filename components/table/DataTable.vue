@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="min-w-full divide-y">
+    <table class="min-w-full divide-y dark:bg-gray-900 dark:text-gray-100">
       <thead>
         <tr>
           <th>ID</th>

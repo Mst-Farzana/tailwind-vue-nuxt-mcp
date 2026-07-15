@@ -34,7 +34,7 @@ watch(isOpen, v => emit('toggle', v));
 </script>
 
 <template>
-  <div v-click-outside="closeDropdown">
+  <div v-click-outside="closeDropdown" class="dark:bg-gray-900 dark:text-gray-100">
     <header
       class="fixed inset-x-0 top-0 z-50 grid h-16 w-full grid-cols-2 items-center gap-2 border-b border-gray-200 bg-gray-50 px-4 text-sm transition-colors duration-300 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100"
     >

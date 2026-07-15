@@ -54,7 +54,7 @@ const deleteClient = (client: Client): void => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 p-6">
+  <div class="min-h-screen bg-gray-50 p-6 dark:bg-gray-900 dark:text-gray-100">
     <div class="mb-6">
       <h1 class="text-2xl font-bold text-gray-800">Clients</h1>
       <p class="text-gray-600">Manage your client list</p>

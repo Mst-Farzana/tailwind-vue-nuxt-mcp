@@ -17,7 +17,9 @@ defineProps<{ user: User }>();
 </script>
 
 <template>
-  <div class="flex items-center justify-between rounded bg-white p-4 transition hover:shadow-lg">
+  <div
+    class="flex items-center justify-between rounded bg-white p-4 transition hover:shadow-lg dark:bg-gray-900 dark:text-gray-100"
+  >
     <!-- LEFT: Avatar + Info -->
     <div class="flex items-center gap-3">
       <!-- Avatar -->

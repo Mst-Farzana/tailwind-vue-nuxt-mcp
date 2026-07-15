@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar bg-base-100 px-4 shadow-md">
+  <div class="navbar bg-base-100 px-4 shadow-md dark:bg-gray-900 dark:text-gray-100">
     <!-- Left Logo -->
     <div class="flex-1">
       <NuxtLink to="/" class="btn btn-ghost text-xl">MyApp</NuxtLink>

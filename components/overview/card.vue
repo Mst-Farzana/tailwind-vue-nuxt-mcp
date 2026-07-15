@@ -14,7 +14,6 @@ const props = defineProps<{
   index: number;
 }>();
 
-// ✅ Extract numeric value (NaN হ্যান্ডেল করুন)
 const numericValue = computed(() => {
   const num = Number(props.value.replace(/[^\d.-]/g, ''));
   return isNaN(num) ? 0 : num;
@@ -29,12 +28,11 @@ const { displayValue } = useCountAnimation(numericValue.value, 1500, props.index
 </script>
 
 <template>
-  <!-- ডার্ক মোড এবং রেসপন্সিভ প্যাডিং যোগ করা হয়েছে -->
   <div
     class="relative rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-colors duration-300 md:p-6 dark:border-gray-700 dark:bg-gray-800"
   >
     <!-- Top: Badge + Settings -->
-    <div class="mb-3 flex items-start justify-between md:mb-4">
+    <div class="mb-3 flex items-start justify-between md:mb-4 dark:bg-gray-900 dark:text-gray-100">
       <span
         :class="[
           'rounded-full px-2.5 py-1 text-xs font-medium md:px-3',
@@ -71,7 +69,9 @@ const { displayValue } = useCountAnimation(numericValue.value, 1500, props.index
     </div>
 
     <!-- Icon -->
-    <div class="absolute right-4 bottom-4 md:right-5 md:bottom-5">
+    <div
+      class="absolute right-4 bottom-4 md:right-5 md:bottom-5 dark:bg-gray-900 dark:text-gray-100"
+    >
       <Icon
         :icon="icon"
         :class="[

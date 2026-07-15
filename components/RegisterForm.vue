@@ -23,7 +23,10 @@ const onSubmit = handleSubmit(data => {
 </script>
 
 <template>
-  <form class="mx-auto max-w-sm space-y-4" @submit.prevent="onSubmit">
+  <form
+    class="mx-auto max-w-sm space-y-4 dark:bg-gray-900 dark:text-gray-100"
+    @submit.prevent="onSubmit"
+  >
     <div>
       <label>Name</label>
       <input v-model="name" class="input input-bordered w-full" />

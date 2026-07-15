@@ -30,7 +30,9 @@ const filesCount = useProfileAnimation(props.profile.files);
 </script>
 
 <template>
-  <div class="flex items-center space-x-12 rounded-lg bg-white p-4">
+  <div
+    class="flex items-center space-x-12 rounded-lg bg-white p-4 dark:bg-gray-900 dark:text-gray-100"
+  >
     <!-- Avatar with Upload Button -->
     <div class="relative">
       <NuxtLink to="/profile/upload" class="block">

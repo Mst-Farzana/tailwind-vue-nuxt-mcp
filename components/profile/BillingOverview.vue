@@ -55,7 +55,7 @@ function handleDownloadPDF(invoice: Invoice) {
 </script>
 
 <template>
-  <section class="m-10 space-y-6">
+  <section class="m-10 space-y-6 dark:bg-gray-900 dark:text-gray-100">
     <!-- Header -->
     <div class="flex items-center justify-between">
       <h1 class="text-xl font-semibold">Billing overview</h1>

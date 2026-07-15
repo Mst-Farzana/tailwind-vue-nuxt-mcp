@@ -144,7 +144,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <div class="min-h-screen space-y-10 p-6">
+  <div class="min-h-screen space-y-10 p-6 dark:bg-gray-900 dark:text-gray-100">
     <!-- Header with Refresh Button -->
 
     <!-- ================= PROFILE ================= -->

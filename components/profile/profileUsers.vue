@@ -55,7 +55,9 @@ function getUsernameFromEmail(email?: string | null): string {
 </script>
 
 <template>
-  <div class="flex items-center justify-between gap-10 rounded-lg bg-gray-50 p-4 shadow">
+  <div
+    class="flex items-center justify-between gap-10 rounded-lg bg-gray-50 p-4 shadow dark:bg-gray-900 dark:text-gray-100"
+  >
     <!-- Left -->
     <div class="flex items-center gap-8">
       <img

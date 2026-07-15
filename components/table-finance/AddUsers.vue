@@ -35,7 +35,12 @@ const addUser = async () => {
 
 <template>
   <div>
-    <button class="rounded bg-amber-400 px-3 py-1" @click="addUser">Add User</button>
+    <button
+      class="rounded bg-amber-400 px-3 py-1 dark:bg-gray-900 dark:text-gray-100"
+      @click="addUser"
+    >
+      Add User
+    </button>
     <pre>{{ result }}</pre>
   </div>
 </template>

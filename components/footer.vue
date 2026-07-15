@@ -1,7 +1,5 @@
 <template>
-  <footer
-    class="border-t border-gray-200 bg-white transition-colors duration-300 dark:border-gray-800 dark:bg-gray-900"
-  >
+  <footer class="border-t border-gray-200 bg-black text-white transition-colors duration-300">
     <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <!-- Main Footer Content -->
       <div class="grid grid-cols-1 gap-8 md:grid-cols-4">

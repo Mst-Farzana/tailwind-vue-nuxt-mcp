@@ -129,7 +129,7 @@ const chartOptions = computed<ApexOptions>(() => ({
 <template>
   <ClientOnly>
     <div
-      class="mb-10 rounded-xl p-6 shadow"
+      class="mb-10 rounded-xl p-6 shadow dark:bg-gray-900 dark:text-gray-100"
       :class="isDark ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'"
     >
       <!-- HEADER -->

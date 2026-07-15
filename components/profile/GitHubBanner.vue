@@ -1,6 +1,8 @@
 <!-- components/GitHubBanner.vue -->
 <template>
-  <div class="relative mt-10 overflow-hidden rounded-2xl p-8 text-center">
+  <div
+    class="relative mt-10 overflow-hidden rounded-2xl p-8 text-center dark:bg-gray-900 dark:text-gray-100"
+  >
     <!-- Gradient Background -->
     <div class="absolute inset-0 bg-linear-to-br from-purple-500 via-blue-500 to-cyan-500" />
 
