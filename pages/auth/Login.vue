@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from '#imports';
+import { Icon } from '@iconify/vue';
 import { ref } from 'vue';
 import { useAuth } from '~/composables/useAuth';
-
-interface AuthError {
-  statusCode?: number;
-  message: string;
-  code?: string;
-}
 
 const router = useRouter();
 const route = useRoute();
@@ -20,40 +15,39 @@ const errorMessage = ref('');
 
 const { signIn, fetchSession } = useAuth();
 
+const clearError = () => {
+  if (errorMessage.value) errorMessage.value = '';
+};
+
 const submit = async () => {
   loading.value = true;
   errorMessage.value = '';
 
   try {
+    // signIn ফাংশনটি কী রিটার্ন করছে তা দেখার জন্য লগ করা হলো
     const result = await signIn(email.value, password.value);
+    console.log('SignIn Result:', result);
 
-    if (result.error) {
-      if (typeof result.error === 'object' && result.error !== null) {
-        const err = result.error as AuthError;
-        if (err.statusCode === 401) {
-          errorMessage.value = 'Invalid email or password';
-        } else if (err.statusCode === 400) {
-          errorMessage.value = 'Please fill in all fields';
-        } else {
-          errorMessage.value = err.message || 'Login failed';
-        }
-      } else {
-        errorMessage.value = String(result.error);
-      }
+    // যদি signIn ফাংশনটি { error: ... } অবজেক্ট রিটার্ন করে
+    if (result && result.error) {
+      const err = result.error as any;
+      errorMessage.value = err.message || err.data?.message || 'Invalid email or password';
       return;
     }
 
-    // Update session
+    // সেশন আপডেট করা
     await fetchSession();
 
-    // Redirect logic:
-    // 1. check route.query.redirect (comes from any page, e.g., /pricing)
-    // 2. fallback default is dashboard
+    // রিডাইরেক্ট লজিক
     const redirectPath = (route.query.redirect as string) || '/sidebar/dashboard';
     router.push(redirectPath);
   } catch (err: any) {
-    console.error('Login error:', err);
-    errorMessage.value = 'Something went wrong. Please try again.';
+    // যদি signIn ফাংশনটি এরর থ্রো (throw) করে (Nuxt $fetch এর ডিফল্ট আচরণ)
+    console.error('❌ Login Fetch Error:', err);
+
+    // ব্যাকএন্ড থেকে আসা সঠিক এরর মেসেজ বের করা
+    const errMsg = err.data?.message || err.message || 'Invalid email or password';
+    errorMessage.value = errMsg;
   } finally {
     loading.value = false;
   }
@@ -61,65 +55,100 @@ const submit = async () => {
 </script>
 
 <template>
-  <form class="mx-auto w-full max-w-md rounded-xl bg-white p-5 shadow-lg" @submit.prevent="submit">
-    <h2 class="mb-4 text-xl font-bold">Login</h2>
-
-    <!-- Email -->
-    <div class="mb-4">
-      <input
-        v-model="email"
-        type="email"
-        placeholder="Enter your email"
-        class="w-full rounded-lg border px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:outline-none"
-        required
-        autocomplete="email"
-      />
+  <div class="mx-auto w-full max-w-md">
+    <div class="mb-8 text-center">
+      <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Welcome Back</h2>
+      <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+        Don't have an account?
+        <NuxtLink
+          to="/auth/signup"
+          class="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+        >
+          Sign up for free
+        </NuxtLink>
+      </p>
     </div>
 
-    <!-- Password -->
-    <div class="mb-4">
-      <input
-        v-model="password"
-        type="password"
-        placeholder="••••••••"
-        class="w-full rounded-lg border px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:outline-none"
-        required
-        autocomplete="current-password"
-      />
-    </div>
+    <form
+      class="space-y-5 rounded-xl bg-white p-6 shadow-lg transition-colors dark:bg-gray-900 dark:shadow-gray-950/50"
+      @submit.prevent="submit"
+    >
+      <!-- Error Banner -->
+      <div
+        v-if="errorMessage"
+        class="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-900/20 dark:text-red-400"
+      >
+        <Icon icon="mdi:alert-circle" class="mt-0.5 h-5 w-5 flex-shrink-0" />
+        <span>{{ errorMessage }}</span>
+      </div>
 
-    <!-- Remember + Forgot -->
-    <div class="mb-6 flex items-center justify-between text-sm">
-      <label class="flex cursor-pointer items-center text-sm">
-        <input v-model="remember" type="checkbox" class="mr-2 rounded border-gray-300" />
-        Remember me
-      </label>
-      <NuxtLink to="/auth/forgot-password" class="text-purple-600 hover:underline">
-        Forgot password?
-      </NuxtLink>
-    </div>
+      <!-- Email -->
+      <div>
+        <label
+          for="email"
+          class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
+          Email Address
+        </label>
+        <input
+          id="email"
+          v-model="email"
+          type="email"
+          placeholder="you@example.com"
+          class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 placeholder-gray-400 transition-colors focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 dark:focus:border-blue-500"
+          required
+          autocomplete="email"
+          @input="clearError"
+        />
+      </div>
 
-    <!-- Buttons -->
-    <div class="flex gap-3">
+      <!-- Password -->
+      <div>
+        <div class="mb-1.5 flex items-center justify-between">
+          <label for="password" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+            Password
+          </label>
+          <NuxtLink
+            to="/auth/forgot-password"
+            class="text-xs font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+          >
+            Forgot password?
+          </NuxtLink>
+        </div>
+        <input
+          id="password"
+          v-model="password"
+          type="password"
+          placeholder="••••••••"
+          class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-gray-900 placeholder-gray-400 transition-colors focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 dark:focus:border-blue-500"
+          required
+          autocomplete="current-password"
+          @input="clearError"
+        />
+      </div>
+
+      <!-- Remember Me -->
+      <div class="flex items-center">
+        <input
+          id="remember"
+          v-model="remember"
+          type="checkbox"
+          class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700"
+        />
+        <label for="remember" class="ml-2 text-sm text-gray-600 dark:text-gray-400">
+          Remember me for 30 days
+        </label>
+      </div>
+
+      <!-- Submit Button -->
       <button
         type="submit"
-        class="flex-1 rounded-lg bg-purple-600 py-2 text-white transition hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-50"
         :disabled="loading"
+        class="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-3 text-sm font-semibold text-white shadow-sm transition-all hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70 dark:focus:ring-offset-gray-900"
       >
-        {{ loading ? 'Logging in...' : 'Login' }}
+        <Icon v-if="loading" icon="mdi:loading" class="h-5 w-5 animate-spin" />
+        {{ loading ? 'Logging in...' : 'Sign In' }}
       </button>
-
-      <NuxtLink
-        to="/auth/signup"
-        class="flex-1 rounded-lg border border-purple-600 py-2 text-center text-purple-600 transition hover:bg-purple-50"
-      >
-        Sign up
-      </NuxtLink>
-    </div>
-
-    <!-- Error Message -->
-    <p v-if="errorMessage" class="mt-4 text-center text-sm text-red-500" role="alert">
-      {{ errorMessage }}
-    </p>
-  </form>
+    </form>
+  </div>
 </template>
