@@ -15,7 +15,7 @@ const colorMode = useColorMode();
 
     <main
       class="min-h-[calc(100vh-4rem)] w-full overflow-y-auto bg-gray-50 pt-20 transition-all duration-300 dark:bg-gray-950"
-      :class="isSidebarOpen ? 'ml-4' : 'ml-0'"
+      :class="isSidebarOpen ? 'ml-14' : 'ml-0'"
     >
       <div class="p-4 md:p-6 lg:p-8">
         <slot />
