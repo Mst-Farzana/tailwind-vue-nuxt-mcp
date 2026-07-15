@@ -1,4 +1,5 @@
 <script setup>
+import { useColorMode } from '#imports';
 import { computed, ref, watch } from 'vue';
 
 const isOpen = ref(false);
@@ -10,19 +11,21 @@ const closeDropdown = () => {
   userDropDownOpen.value = false;
 };
 
-function toggleUserDropDown() {
+const toggleUserDropDown = () => {
   userDropDownOpen.value = !userDropDownOpen.value;
-}
+  dropDownOpen.value = false;
+};
 
-function toggleDropDown() {
+const toggleDropDown = () => {
   dropDownOpen.value = !dropDownOpen.value;
-}
+  userDropDownOpen.value = false;
+};
 
-function toggleMenu() {
+const toggleMenu = () => {
   isOpen.value = !isOpen.value;
-}
+};
 
-const searchMargin = computed(() => (isOpen.value ? 'ml-30' : 'ml-0'));
+const searchMargin = computed(() => (isOpen.value ? 'ml-0 md:ml-64' : 'ml-0'));
 const colorMode = useColorMode();
 
 const toggleDarkMode = () => {
@@ -36,59 +39,40 @@ watch(isOpen, v => emit('toggle', v));
 <template>
   <div v-click-outside="closeDropdown" class="relative">
     <header
-      class="sticky top-0 left-0 z-49 grid h-16 w-full grid-cols-2 items-center gap-2 border-b border-gray-200 bg-gray-50 px-4 text-sm transition-colors duration-300 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100"
+      class="sticky top-0 left-0 z-50 flex h-16 w-full items-center justify-between border-b border-gray-200 bg-gray-50 px-4 text-sm transition-colors duration-300 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-100"
     >
-      <div v-if="isOpen" class="absolute top-4 bottom-1 left-3 flex h-screen">
-        <Sidebar />
-        <!-- Small arrow icon attached to sidebar's right edge -->
-        <div>
-          <button
-            class="mt-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400"
-            @click="toggleMenu"
-          >
-            <svg width="40" height="28" viewBox="0 0 80 70" xmlns="http://www.w3.org/2000/svg">
-              <path d="M30 14 L14 35 L30 56 L36 50 L24 35 L36 20 Z" fill="currentColor" />
-              <rect x="38" y="24" width="26" height="6" fill="currentColor" />
-              <rect x="20" y="34" width="44" height="6" fill="currentColor" />
-              <rect x="38" y="44" width="26" height="6" fill="currentColor" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
+      <!-- Left Side: Menu & Search -->
       <div class="flex items-center gap-3">
-        <div class="flex items-center gap-3">
-          <button v-if="!isOpen" class="text-gray-700 dark:text-gray-300" @click="toggleMenu">
-            <Icon name="mdi:menu" size="25" />
-          </button>
-          <input
-            type="text"
-            placeholder="Search (Ctrl + K)"
-            class="rounded border-2 border-gray-200 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 transition-all duration-300 focus:border-blue-700 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
-            :class="searchMargin"
-          />
-        </div>
+        <button
+          class="flex h-8 w-8 items-center justify-center rounded text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
+          @click="toggleMenu"
+        >
+          <Icon name="mdi:menu" class="text-xl" />
+        </button>
+
+        <input
+          type="text"
+          placeholder="Search (Ctrl + K)"
+          class="hidden rounded border-2 border-gray-200 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 transition-all duration-300 focus:border-blue-700 focus:outline-none sm:block dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400"
+          :class="searchMargin"
+        />
       </div>
 
-      <div class="flex w-full items-center justify-between bg-transparent px-4 py-2">
-        <ul class="flex items-center gap-5">
-          <li>
+      <!-- Right Side: Actions -->
+      <div class="flex items-center gap-2">
+        <ul class="flex items-center gap-1 sm:gap-3">
+          <!-- Sample Menu -->
+          <li class="relative hidden sm:block">
             <button
-              class="flex h-8 w-8 items-center justify-center rounded text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
+              class="flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-nowrap text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
+              @click="toggleDropDown"
             >
-              <Icon name="mdi:menu" class="text-xl" />
+              <span>Sample menu</span>
+              <Icon name="mdi:chevron-down" class="text-lg" />
             </button>
-          </li>
-
-          <li
-            class="relative flex cursor-pointer items-center gap-5 text-nowrap text-gray-700 dark:text-gray-300"
-            @click="toggleDropDown"
-          >
-            <span>Sample menu</span>
-            <Icon name="mdi:chevron-down" class="text-lg" />
             <ul
               v-if="dropDownOpen"
-              class="absolute top-15 right-1 w-45 divide-y divide-gray-200 rounded-lg bg-white shadow-md dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-100"
+              class="absolute top-full right-0 z-50 mt-1 w-40 divide-y divide-gray-200 rounded-lg bg-white shadow-md dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-100"
             >
               <li
                 class="flex cursor-pointer items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-700 active:bg-gray-200 active:text-black dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-blue-400 dark:active:bg-gray-600"
@@ -111,20 +95,23 @@ watch(isOpen, v => emit('toggle', v));
             </ul>
           </li>
 
-          <li
-            class="relative flex cursor-pointer items-center gap-2 text-gray-700 dark:text-gray-300"
-            @click="toggleUserDropDown"
-          >
-            <div
-              class="flex h-9 w-9 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700"
+          <!-- User Dropdown -->
+          <li class="relative">
+            <button
+              class="flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-nowrap text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
+              @click="toggleUserDropDown"
             >
-              <Icon name="mdi:account" class="text-xl text-gray-700 dark:text-gray-300" />
-            </div>
-            <span class="text-nowrap">John Doe</span>
-            <Icon name="mdi:chevron-down" class="text-lg" />
+              <div
+                class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700"
+              >
+                <Icon name="mdi:account" class="text-xl text-gray-700 dark:text-gray-300" />
+              </div>
+              <span class="hidden md:block">John Doe</span>
+              <Icon name="mdi:chevron-down" class="hidden text-lg md:block" />
+            </button>
             <ul
               v-if="userDropDownOpen"
-              class="absolute top-15 left-5 w-45 divide-y divide-gray-200 rounded-lg bg-white shadow-md dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-100"
+              class="absolute top-full right-0 z-50 mt-1 w-44 divide-y divide-gray-200 rounded-lg bg-white shadow-md dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-100"
             >
               <li>
                 <NuxtLink
@@ -165,6 +152,7 @@ watch(isOpen, v => emit('toggle', v));
             </ul>
           </li>
 
+          <!-- Dark Mode Toggle -->
           <li>
             <button
               class="flex h-8 w-8 items-center justify-center rounded text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
@@ -177,14 +165,17 @@ watch(isOpen, v => emit('toggle', v));
             </button>
           </li>
 
-          <li>
+          <!-- Help -->
+          <li class="hidden sm:block">
             <button
               class="flex h-8 w-8 items-center justify-center rounded text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
             >
               <Icon name="mdi:help-circle-outline" class="text-xl" />
             </button>
           </li>
-          <li>
+
+          <!-- Logout Icon -->
+          <li class="hidden sm:block">
             <button
               class="flex h-8 w-8 items-center justify-center rounded text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-700"
             >

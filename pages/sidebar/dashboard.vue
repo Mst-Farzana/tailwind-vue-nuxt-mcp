@@ -14,7 +14,7 @@ import overview from './overview.vue';
 
 <template>
   <div
-    class="min-h-screen w-full bg-gray-50 p-6 text-gray-900 transition-colors duration-300 dark:bg-gray-950 dark:text-gray-100"
+    class="min-h-screen w-full bg-gray-50 p-2 text-gray-900 transition-colors duration-300 dark:bg-gray-950 dark:text-gray-100"
   >
     <overview />
     <profile class="m-4 md:m-10 lg:m-20" />
