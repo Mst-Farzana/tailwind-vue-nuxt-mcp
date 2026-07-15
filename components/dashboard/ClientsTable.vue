@@ -237,11 +237,5 @@ const showBanner = ref(true);
         </button>
       </div>
     </div>
-
-    <!-- Footer -->
-    <div class="mt-10 text-sm text-gray-500">
-      ©2026, JustBoil.me.
-      <a href="#" class="text-blue-600 hover:underline">Buy Premium version</a>
-    </div>
   </div>
 </template>

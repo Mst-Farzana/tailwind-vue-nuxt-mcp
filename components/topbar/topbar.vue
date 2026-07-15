@@ -88,7 +88,7 @@ watch(isOpen, v => emit('toggle', v));
             <Icon name="mdi:chevron-down" class="text-lg" />
             <ul
               v-if="dropDownOpen"
-              class="absolute top-15 right-1 w-45 divide-y divide-gray-200 rounded-lg bg-white shadow-md dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-100"
+              class="absolute top-10 right-1 w-45 divide-y divide-gray-200 rounded-lg bg-white shadow-md dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-100"
             >
               <li
                 class="flex cursor-pointer items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-700 active:bg-gray-200 active:text-black dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-blue-400 dark:active:bg-gray-600"
